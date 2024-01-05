@@ -3,9 +3,17 @@
     <h1>Example Ref</h1>
     <p>{{ count }}</p>
     <button @click="increaseCounter">Increase Counter</button>
+    <form @submit.prevent="handleSubmit">
+      <!-- prevent = not cause page to refresh -->
+      <input type="text" v-model="firstName" placeholder="First Name" />
+      <!-- v-model = input and property to sync -->
+      <input type="text" v-model="lastName" placeholder="Last Name" />
+    </form>
+    <button @click="handleSubmit">Submit</button>
     <p>Full Name: {{ fullName }}</p>
-    <p>Full Name: {{ reversedMessage }}</p>
-    <p>{{ oldNew }}</p>
+    <!-- <p>Full Name: {{ fullName }}</p> -->
+    <p>Reversed Name: {{ reversedMessage }}</p>
+    <p>Count: {{ oldNew }}</p>
   </div>
 </template>
 
@@ -13,9 +21,10 @@
 import { ref, computed, watch } from "vue";
 
 const count = ref(0);
-const firstName = ref("Jeff");
-const lastName = ref("Bong");
-const message = ref("Hello");
+const firstName = ref("");
+const lastName = ref("");
+const fullName = ref("");
+// const message = ref("Hello");
 
 const increaseCounter = () => {
   //regular function
@@ -24,22 +33,24 @@ const increaseCounter = () => {
   //(Like a magic window to show your display)
 };
 
-const fullName = computed(() => {
-  //computed property
-  return firstName.value + " " + lastName.value; //you can directly see the calculations happening, returning the value for to display.
-});
+// const fullName = computed(() => {
+//   //computed property
+//   return firstName.value + " " + lastName.value; //you can directly see the calculations happening, returning the value for to display.
+// });
 
 const reversedMessage = computed(() => {
-  return message.value.split("").reverse().join("");
+  return fullName.value.split("").reverse().join("");
 });
 
 const oldNew = ref("");
-njjn;
 watch(count, (newValue, oldValue) => {
-  oldNew.value = `Count changed from ${oldValue} to ${newValue}`;
+  oldNew.value = `Changed from ${oldValue} to ${newValue}`;
 });
 
-// isi form
+const handleSubmit = () => {
+  fullName.value = firstName.value + " " + lastName.value;
+};
+// fill form with firstName and lastName
 // submit
-//console.log
+//console.log the firstName + lastName
 </script>
